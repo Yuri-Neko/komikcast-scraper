@@ -11,7 +11,7 @@ function URL_PARSE(url) {
     }
 }
 
-async function GetLatest() {
+async function Latest() {
     return new Promise(async (resolve, reject) => {
         let Data = []
         let status;
@@ -38,23 +38,23 @@ async function GetLatest() {
                 status = true
             })
         } catch (_error) {
-            console.log(_error)
             status = false
         } finally {
             if (status == false) {
                 reject(false)
             }
-            console.log(Data)
             resolve(Data)
         }
     })
 }
-GetInfo("https://komikcast.me/komik/more-than-lovers-less-than-friends-chapter-01-bahasa-indonesia/").then((data) => {console.log(data)})
-async function GetInfo(url) {
+
+async function Info(url) {
     return new Promise(async(resolve, reject) => {
         let Data, status, passed, parse, type;
         parse = URL_PARSE(url)
-        if (parse.includes('chapter')) {
+        if (parse == false) {
+            reject(parse)
+        } else if (parse.includes('chapter')) {
             type = 0
             passed = "https://apk.nijisan.my.id/komik/baca/" + parse
         } else {
@@ -73,8 +73,8 @@ async function GetInfo(url) {
                     Data = {
                         title: data.comic_title,
                         chapter: data.ch,
-                        prev_ch: data.prev_ch || null,
-                        next_ch: data.next_ch || null,
+                        prev_ch: data.prev_ch || false,
+                        next_ch: data.next_ch || false,
                         images: data.images
                     }
                     status = true
@@ -109,7 +109,6 @@ async function GetInfo(url) {
 
             })
         } catch (_error) {
-            console.log(_error)
             status = false
         } finally {
             if (!status) {
@@ -154,4 +153,9 @@ async function Search(query) {
             resolve(Data)
         }
     })
+}
+module.exports = {
+    Info,
+    Latest,
+    Search
 }
