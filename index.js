@@ -51,15 +51,23 @@ async function Latest() {
 async function Info(url) {
     return new Promise(async(resolve, reject) => {
         let Data, status, passed, parse, type;
-        parse = URL_PARSE(url)
-        if (parse == false) {
-            reject(parse)
-        } else if (parse.includes('chapter')) {
-            type = 0
-            passed = "https://apk.nijisan.my.id/komik/baca/" + parse
+        if (url.match(/http?s:\/\//)) {
+            parse = URL_PARSE(url)
+            if (parse.includes('chapter')) {
+                type = 0
+                passed = "https://apk.nijisan.my.id/komik/baca/" + parse
+            } else {
+                type = 1
+                passed = "https://apk.nijisan.my.id/komik/info/" + parse
+            }
         } else {
-            type = 1
-            passed = "https://apk.nijisan.my.id/komik/info/" + parse
+            if (url.match(/chapter/)) {
+                type = 0
+                passed = "https://apk.nijisan.my.id/komik/baca/" + url
+            } else {
+                type = 1
+                passed = "https://apk.nijisan.my.id/komik/info/" + url
+            }
         }
         try {
             await axios.request({
@@ -84,7 +92,8 @@ async function Info(url) {
                         list_chapter.push({
                             chapter: i.ch,
                             time_release: i.time_release,
-                            link: 'https://komikcast.me/komik/' + i.linkId + '/'
+                            link: 'https://komikcast.me/komik/' + i.linkId + '/',
+                            linkId: i.linkId
                         })
                     }
                     Data = {
@@ -109,6 +118,7 @@ async function Info(url) {
 
             })
         } catch (_error) {
+            console.log(_error)
             status = false
         } finally {
             if (!status) {
@@ -139,7 +149,8 @@ async function Search(query) {
                         image2: i.image2,
                         type: i.type,
                         isCompleted: i.isCompleted || false,
-                        link: 'https://komikcast.me/komik/' + i.linkId + '/'
+                        link: 'https://komikcast.me/komik/' + i.linkId + '/',
+                        LinkId: i.linkId
                     })
                 }
                 status = true
