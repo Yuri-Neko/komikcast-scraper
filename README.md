@@ -7,9 +7,9 @@ well its easy.
 1. clone this repo
    ```sh
    git clone https://github.com/xct007/komikcast-scraper.git
-
+   ```
     or
-
+   ```sh
    just copy the source code
    ```
 2. Example
