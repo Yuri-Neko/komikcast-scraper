@@ -44,8 +44,4 @@ function parseUrl(url: string): ObjectParse | any {
     }
   }
 }
-/*
-const test = parseUrl('https://komikcast.site/komik/im-an-evil-god-chapter-314-bahasa-indonesia/')
-console.log(test)*/
-
 export { domain, parseUrl };

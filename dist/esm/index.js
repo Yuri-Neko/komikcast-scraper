@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { domain, parseUrl } from './utils';
+import { domain, parseUrl } from './utils.js';
 async function Latest() {
     const result = [];
     try {

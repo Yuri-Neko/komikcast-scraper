@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Info = exports.Latest = exports.Search = void 0;
 const axios_1 = __importDefault(require("axios"));
-const utils_1 = require("./utils");
+const utils_js_1 = require("./utils.js");
 async function Latest() {
     const result = [];
     try {
@@ -53,7 +53,7 @@ async function Search(query) {
                 image2: i.image2,
                 type: i.type,
                 isCompleted: i.isCompleted || false,
-                link: `https://komikcast.${utils_1.domain}/komik/${i.linkId}/`,
+                link: `https://komikcast.${utils_js_1.domain}/komik/${i.linkId}/`,
                 LinkId: i.linkId,
             });
         }
@@ -65,7 +65,7 @@ async function Search(query) {
 }
 exports.Search = Search;
 async function Info(url) {
-    const _a = (0, utils_1.parseUrl)(url);
+    const _a = (0, utils_js_1.parseUrl)(url);
     if (!_a.passed) {
         return false;
     }
@@ -92,7 +92,7 @@ async function Info(url) {
                 result.push({
                     chapter: i.ch,
                     time_release: i.time_release,
-                    link: `https://komikcast.${utils_1.domain}/komik/${i.linkId}/`,
+                    link: `https://komikcast.${utils_js_1.domain}/komik/${i.linkId}/`,
                     linkId: i.linkId,
                 });
             }

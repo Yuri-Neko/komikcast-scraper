@@ -22,6 +22,7 @@ async function writePackageJson () {
   if (libCjsExists) {
     const packageJson = JSON.stringify({ type: 'commonjs' }, null, 2)
     await fs.promises.writeFile(path.join(libCjs, 'package.json'), packageJson)
+    const InitFix = await fs.promises.readFile(path.join(libCjs, 'index.js'), 'utf8');
   } else console.warn('CJS folder not found')
   const libEsm = path.join(libPath, 'esm')
   const libEsmExists = await fileExists(libEsm)
