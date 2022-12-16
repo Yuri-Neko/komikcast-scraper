@@ -16,8 +16,7 @@
     "build:esm": "tsc -p tsconfig.esm.json",
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:all": "npm run build:esm && npm run build:cjs",
-    "format": "prettier -w \"src/**/*.ts\"",
-    "prepare": "npm run build:all"
+    "format": "prettier -w \"src/**/*.ts\""
   },
   "keywords": [
     "scraper",
