@@ -1,24 +1,31 @@
-# komikcast scraper
-easy way to scrape komikcast.me
+# KOMIKCAST API SCRAPER 
 
 ## How to use
-well its easy.
-
-1. clone this repo
+1. Install Packages
    ```sh
-   git clone https://github.com/xct007/komikcast-scraper.git
+   npm install github:xct007/komikcast-scraper
    ```
-    or
+    or using yarn
    ```sh
-   just copy the source code
+   yarn add github:xct007/komikcast-scraper
    ```
 2. Example
    ```js
+    
+    // CJS
     const {
         Info,
         Latest,
         Search
-    } = require('./index.js')
+    } = require('komikcast-scraper')
+
+    // ESM
+    import {
+        Info,
+        Latest,
+        Search
+    } from "komikcast-scraper"
+
 
     // Get latest comic update
 
@@ -26,41 +33,40 @@ well its easy.
 
 
     /*
-    can be complete link url
-
+    Can be complete link url
     eg. https://komikcast.me/komik/im-an-evil-god/
     eg. https://komikcast.me/komik/im-an-evil-god-chapter-270-bahasa-indonesia/
 
-    OR just LinkId
 
+    OR just LinkId
     eg. im-an-evil-god
     eg. im-an-evil-god-chapter-270-bahasa-indonesia
     */
 
     // Get info comic
 
-    Info('https://komikcast.me/komik/im-an-evil-god/').then(async(data) => {console.log(data)})
+    Info('https://komikcast.me/komik/im-an-evil-god/').then((data) => { console.log(data) })
 
     // Get comic chapter
 
-    Info('im-an-evil-god-chapter-270-bahasa-indonesia').then(async(data) => {console.log(data)})
+    Info('im-an-evil-god-chapter-270-bahasa-indonesia').then((data) => { console.log(data) })
 
+
+    // Search comics
+    Search("pico").then((json) => { console.log(json) })
    ```
-3. And voila our beloved komikcast.me admins will be furious with you and me.
 ## How it works
 Its directly send GET request to they own api that return JSON.
- - The url for request is not __https://komikcast.me/__ but __https://apk.nijisan.my.id/__
-    - API router
-        - Fetch latest comic
-          - _https://apk.nijisan.my.id/premium/home/latest/1/1_
-        - Search comic
-          - _https://apk.nijisan.my.id/komik/search/{query}/1/1_
-        - Get info comic
-          - Depends on request
-            - Get comic info
-              - _https://apk.nijisan.my.id/komik/info/{linkId}_
-            - Get comic chapter info
-              - _https://apk.nijisan.my.id/komik/baca/{LinkId}_
+The url for request is not __https://komikcast.site/__ but __https://apk.nijisan.my.id/__
+### API router
+- Fetch latest comic
+```https://apk.nijisan.my.id/premium/home/latest/1/1```
+- Search comic
+```https://apk.nijisan.my.id/komik/search/{query}/1/1```
+- Get comic info
+```https://apk.nijisan.my.id/komik/info/{linkId}```
+- Get comic chapter info
+```https://apk.nijisan.my.id/komik/baca/{LinkId}```
 # Contributing
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue.
