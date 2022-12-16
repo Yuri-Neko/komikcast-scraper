@@ -1,9 +1,9 @@
 {
   "extends": "./tsconfig-base.json",
   "compilerOptions": {
-    "module": "ES2020",
+    "module": "ESNext",
     "outDir": "dist/esm",
-    "target": "ES6"
+    "target": "ESNEXT"
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]

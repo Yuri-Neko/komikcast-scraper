@@ -4,22 +4,20 @@
   "description": "Simple and fast komikcast api scraper",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
   "exports": {
     ".": {
-      "import": {
-        "types": "./dist/esm/index.d.ts",
-        "default": "./dist/esm/index.js"
-      },
-      "require": {
-        "types": "./dist/cjs/index.d.ts",
-        "default": "./dist/cjs/index.js"
-      }
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/esm/index.d.ts"
     }
   },
   "scripts": {
     "build:esm": "tsc -p tsconfig.esm.json",
     "build:cjs": "tsc -p tsconfig.cjs.json",
-    "build:all": "npm run build:esm && npm run build:cjs"
+    "build:all": "npm run build:esm && npm run build:cjs",
+    "format": "prettier -w \"src/**/*.ts\"",
+    "prepare": "npm run build:all"
   },
   "keywords": [
     "scraper",
@@ -32,7 +30,10 @@
     "axios": "^0.27.2"
   },
   "devDependencies": {
+    "prettier": "^2.8.1",
     "ts-node": "^10.9.1",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.9.4"
   }
 }

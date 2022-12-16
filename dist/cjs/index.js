@@ -53,10 +53,10 @@ function Latest() {
                 case 1:
                     _c.trys.push([1, 3, , 4]);
                     return [4 /*yield*/, axios_1.default.request({
-                            url: "https://apk.nijisan.my.id/premium/home/latest/1/1",
-                            method: "GET",
+                            url: 'https://apk.nijisan.my.id/premium/home/latest/1/1',
+                            method: 'GET',
                             headers: {
-                                "User-Agent": "okhttp/4.9.3",
+                                'User-Agent': 'okhttp/4.9.3',
                             },
                         })];
                 case 2:
@@ -95,9 +95,9 @@ function Search(query) {
                     _c.trys.push([1, 3, , 4]);
                     return [4 /*yield*/, axios_1.default.request({
                             url: "https://apk.nijisan.my.id/komik/search/".concat(query, "/1/1"),
-                            method: "GET",
+                            method: 'GET',
                             headers: {
-                                "User-Agent": "okhttp/4.9.3",
+                                'User-Agent': 'okhttp/4.9.3',
                             },
                         })];
                 case 2:
@@ -141,9 +141,9 @@ function Info(url) {
                     _c.trys.push([1, 3, , 4]);
                     return [4 /*yield*/, axios_1.default.request({
                             url: _a.url,
-                            method: "GET",
+                            method: 'GET',
                             headers: {
-                                "User-Agent": "okhttp/4.9.3",
+                                'User-Agent': 'okhttp/4.9.3',
                             },
                         })];
                 case 2:
@@ -177,9 +177,9 @@ function Info(url) {
                                 image2: data.image2,
                                 rating: data.rating,
                                 sinopsis: data.sinopsis,
-                                type: data.type.replace(/Type: /g, ""),
+                                type: data.type.replace(/Type: /g, ''),
                                 status: data.status,
-                                released: data.released.replace(/\D/g, ""),
+                                released: data.released.replace(/\D/g, ''),
                                 total_chapter: data.total_chapter,
                                 updated_on: data.updated_on,
                                 genres: data.genres,
