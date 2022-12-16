@@ -2,8 +2,7 @@
   "extends": "./tsconfig-base.json",
   "compilerOptions": {
     "module": "CommonJS",
-    "outDir": "dist/cjs",
-    "target": "es5"
+    "outDir": "dist/cjs"
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]

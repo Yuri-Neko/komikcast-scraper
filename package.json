@@ -2,34 +2,44 @@
   "name": "komikcast-scraper",
   "version": "1.0.0",
   "description": "Simple and fast komikcast api scraper",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/esm/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "types": "./dist/esm/index.d.ts"
+      "types": "./dist/@types/index.d.ts",
+      "require": "./dist/cjs/index.js"
     }
   },
+  "types": "./dist/@types/index.d.ts",
+  "main": "./dist/cjs/index.js",
   "scripts": {
+    "clean": "rimraf ./dist",
     "build:esm": "tsc -p tsconfig.esm.json",
     "build:cjs": "tsc -p tsconfig.cjs.json",
-    "build:all": "npm run build:esm && npm run build:cjs",
+    "build:types": "tsc -p tsconfig.types.json",
+    "build:all": "npm run clean && npm run build:esm && npm run build:cjs && npm run build:types && node scripts/write-package.js",
     "format": "prettier -w \"src/**/*.ts\""
   },
   "keywords": [
     "scraper",
     "komikcast",
-    "api-scraper"
+    "komikcast-api-scraper"
   ],
   "author": "FrierenDv",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xct007/komikcast-scraper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/xct007/komikcast-scraper/issue"
+  },
+  "homepage": "https://github.com/xct007/komikcast-scraper#readme",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.27.2"
   },
   "devDependencies": {
     "prettier": "^2.8.1",
+    "rimraf": "^3.0.2",
     "ts-node": "^10.9.1",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0",

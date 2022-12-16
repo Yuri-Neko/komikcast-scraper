@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parseUrl = exports.domain = void 0;
-var domain = 'site';
+const domain = 'site';
 exports.domain = domain;
-var REGEX_URL = /\/komik\/(.*)\/?/;
+const REGEX_URL = /\/komik\/(.*)\/?/;
 function parseUrl(url) {
     if (/http?s:\/\//i.test(url)) {
-        var Match = url.match(REGEX_URL);
+        const Match = url.match(REGEX_URL);
         if (Match) {
             if (Match.includes('chapter')) {
                 return {
@@ -45,3 +45,4 @@ function parseUrl(url) {
     }
 }
 exports.parseUrl = parseUrl;
+//# sourceMappingURL=utils.js.map

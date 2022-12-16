@@ -44,3 +44,4 @@ function parseUrl(url) {
 const test = parseUrl('https://komikcast.site/komik/im-an-evil-god-chapter-314-bahasa-indonesia/')
 console.log(test)*/
 export { domain, parseUrl };
+//# sourceMappingURL=utils.js.map

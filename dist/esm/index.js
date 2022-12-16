@@ -113,3 +113,4 @@ async function Info(url) {
     }
 }
 export { Search, Latest, Info };
+//# sourceMappingURL=index.js.map
