@@ -67,15 +67,17 @@ The url for request is not __https://komikcast.site/__ but __https://apk.nijisan
 ```https://apk.nijisan.my.id/komik/info/{linkId}```
 - Get comic chapter info
 ```https://apk.nijisan.my.id/komik/baca/{LinkId}```
+
+## TODO
+- [ ] Add convert image to PDF file/buffer 
+- [ ] Make code more readable
 # Contributing
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue.
-Don't forget to give the project a star! Thanks again!
-
+```
 1. Fork the Repo
 2. Commit your Changes
 3. Push to the Branch
 4. Open a Pull Request
+```
 
 ## Contact
 David - [@david.stefen](https://instagram.com/david.stefen)
