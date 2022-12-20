@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { domain, Result, parseUrl } from './utils';
+import { domain, Result, parseUrl } from './utils.js';
 
 const BASE_URL = 'https://apk.nijisan.my.id';
 const API_LATEST = `${BASE_URL}/premium/home/latest/1/1`;

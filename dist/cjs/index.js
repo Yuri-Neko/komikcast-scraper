@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Info = exports.Search = exports.Latest = void 0;
 const axios_1 = __importDefault(require("axios"));
-const utils_1 = require("./utils");
+const utils_js_1 = require("./utils.js");
 const BASE_URL = 'https://apk.nijisan.my.id';
 const API_LATEST = `${BASE_URL}/premium/home/latest/1/1`;
 const API_SEARCH = (query) => `${BASE_URL}/komik/search/${query}/1/1`;
@@ -64,7 +64,7 @@ const Search = async (query) => {
         for (const i of data.data.page) {
             _tmp.push({
                 ...i,
-                link: `https://komikcast.${utils_1.domain}/komik/${i.linkId}/`,
+                link: `https://komikcast.${utils_js_1.domain}/komik/${i.linkId}/`,
             });
         }
         result = {
@@ -88,7 +88,7 @@ exports.Search = Search;
  */
 const Info = async (url) => {
     let result;
-    const uri = (0, utils_1.parseUrl)(url);
+    const uri = (0, utils_js_1.parseUrl)(url);
     if (!uri) {
         return {
             success: false,
@@ -118,7 +118,7 @@ const Info = async (url) => {
             for (const i of data.data.list_chapter) {
                 _tmp.push({
                     ...i,
-                    link: `https://komikcast.${utils_1.domain}/komik/${i.linkId}/`,
+                    link: `https://komikcast.${utils_js_1.domain}/komik/${i.linkId}/`,
                 });
             }
             data.data['type'] = data.data['type'].replace(/Type: /g, '');
