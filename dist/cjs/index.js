@@ -3,122 +3,156 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Info = exports.Latest = exports.Search = void 0;
+exports.Info = exports.Search = exports.Latest = void 0;
 const axios_1 = __importDefault(require("axios"));
-const utils_js_1 = require("./utils.js");
-async function Latest() {
-    const result = [];
-    try {
-        const { data } = await axios_1.default.request({
-            url: 'https://apk.nijisan.my.id/premium/home/latest/1/1',
-            method: 'GET',
-            headers: {
-                'User-Agent': 'okhttp/4.9.3',
-            },
-        });
-        for (const i of data.data) {
-            result.push({
-                title: i.title,
-                ch: i.ch,
-                type: i.type,
-                rating: i.rating,
-                image: i.image,
-                image2: i.image2,
-                link: i.link,
-            });
-        }
-        return result;
+const utils_1 = require("./utils");
+const BASE_URL = 'https://apk.nijisan.my.id';
+const API_LATEST = `${BASE_URL}/premium/home/latest/1/1`;
+const API_SEARCH = (query) => `${BASE_URL}/komik/search/${query}/1/1`;
+/**
+ * Get latest comics update
+ * @returns {Promise<Object>}
+ */
+const Latest = async () => {
+    let result;
+    const data = await axios_1.default
+        .request({
+        url: API_LATEST,
+        method: 'GET',
+        headers: {
+            'User-Agent': 'okhttp/4.9.3',
+        },
+    })
+        .catch((e) => {
+        return e.response;
+    });
+    if (data.data && data.data.data.length) {
+        result = {
+            success: true,
+            ...data.data,
+        };
     }
-    catch (error) {
-        return error;
+    else {
+        result = {
+            success: false,
+            message: 'Failed to fetch data from {API_LATEST}',
+        };
     }
-}
+    return result;
+};
 exports.Latest = Latest;
-async function Search(query) {
-    const result = [];
-    try {
-        const { data } = await axios_1.default.request({
-            url: `https://apk.nijisan.my.id/komik/search/${query}/1/1`,
-            method: 'GET',
-            headers: {
-                'User-Agent': 'okhttp/4.9.3',
-            },
-        });
-        for (const i of data.page) {
-            result.push({
-                title: i.title,
-                chapter: i.chapter,
-                rating: i.rating,
-                image: i.image,
-                image2: i.image2,
-                type: i.type,
-                isCompleted: i.isCompleted || false,
-                link: `https://komikcast.${utils_js_1.domain}/komik/${i.linkId}/`,
-                LinkId: i.linkId,
+/**
+ * Get comics data by query
+ * @param {String} query
+ * @returns {Promise<object>}
+ */
+const Search = async (query) => {
+    let result;
+    const data = await axios_1.default
+        .request({
+        url: API_SEARCH(query),
+        method: 'GET',
+        headers: {
+            'User-Agent': 'okhttp/4.9.3',
+        },
+    })
+        .catch((e) => {
+        return e.response;
+    });
+    if (data.data && data.data.page) {
+        const _tmp = [];
+        for (const i of data.data.page) {
+            _tmp.push({
+                ...i,
+                link: `https://komikcast.${utils_1.domain}/komik/${i.linkId}/`,
             });
         }
-        return result;
+        result = {
+            success: true,
+            data: _tmp,
+        };
     }
-    catch (error) {
-        return error;
+    else {
+        result = {
+            success: false,
+            message: `Error, Query "${query}" Not Found or idk`,
+        };
     }
-}
+    return result;
+};
 exports.Search = Search;
-async function Info(url) {
-    const _a = (0, utils_js_1.parseUrl)(url);
-    if (!_a.passed) {
-        return false;
+/**
+ * get comic details
+ * @param {String} url
+ * @returns {Promise<Object>}
+ */
+const Info = async (url) => {
+    let result;
+    const uri = (0, utils_1.parseUrl)(url);
+    if (!uri) {
+        return {
+            success: false,
+            message: "Error, url didn't match {parseUrl}",
+        };
     }
-    try {
-        const { data } = await axios_1.default.request({
-            url: _a.url,
-            method: 'GET',
-            headers: {
-                'User-Agent': 'okhttp/4.9.3',
-            },
-        });
-        if (_a.type == 0) {
-            return {
-                title: data.comic_title,
-                chapter: data.ch,
-                prev_ch: data.prev_ch || false,
-                next_ch: data.next_ch || false,
-                images: data.images,
+    const data = await axios_1.default
+        .request({
+        url: String(uri),
+        method: 'GET',
+        headers: {
+            'User-Agent': 'okhttp/4.9.3',
+        },
+    })
+        .catch((e) => {
+        return e.response;
+    });
+    if (data.data) {
+        if (data.data && data.data.images) {
+            result = {
+                success: true,
+                ...data.data,
             };
         }
-        else if (_a.type == 1) {
-            const result = [];
-            for (const i of data.list_chapter) {
-                result.push({
-                    chapter: i.ch,
-                    time_release: i.time_release,
-                    link: `https://komikcast.${utils_js_1.domain}/komik/${i.linkId}/`,
-                    linkId: i.linkId,
+        else if (data.data && data.data.list_chapter) {
+            let _tmp = [];
+            for (const i of data.data.list_chapter) {
+                _tmp.push({
+                    ...i,
+                    link: `https://komikcast.${utils_1.domain}/komik/${i.linkId}/`,
                 });
             }
-            return {
-                link: url,
-                title: data.title,
-                title_other: data.title_other,
-                author: data.author,
-                image: data.image,
-                image2: data.image2,
-                rating: data.rating,
-                sinopsis: data.sinopsis,
-                type: data.type.replace(/Type: /g, ''),
-                status: data.status,
-                released: data.released.replace(/\D/g, ''),
-                total_chapter: data.total_chapter,
-                updated_on: data.updated_on,
-                genres: data.genres,
-                chapters: result,
+            data.data['type'] = data.data['type'].replace(/Type: /g, '');
+            data.data['released'] = data.data['released'].replace(/\D/g, '');
+            delete data.data['list_chapter'];
+            result = {
+                success: true,
+                ...data.data,
+                list_chapter: _tmp,
             };
         }
-        return false;
+        else {
+            result = {
+                success: false,
+                message: 'Error, something wrong with {parseUrl} maybe',
+            };
+        }
     }
-    catch (error) {
-        return error;
+    else {
+        result = {
+            success: false,
+            message: 'Axios failed sending GET request to {parseUrl}',
+        };
     }
-}
+    return result;
+};
 exports.Info = Info;
+const komikcast = {
+    Search: exports.Search,
+    Latest: exports.Latest,
+    Info: exports.Info,
+    search: exports.Search,
+    latest: exports.Latest,
+    detail: exports.Info,
+};
+exports.default = komikcast;
 //# sourceMappingURL=index.js.map
